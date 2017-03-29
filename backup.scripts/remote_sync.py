@@ -13,8 +13,9 @@ def check_log(LOG,ERR_FILE):
 	err_file = open(ERR_FILE, "a")
 	open(ERR_FILE,"w").close()
 	for line in log_file:
-		if 'error' in line:
+		if 'err' in line:
 			err_file.write(line)
-			print line
+		if 'ERR' in line:
+			err_file.write(line)
 	log_file.close()
 	err_file.close()
