@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
+import smtplib
+from email.mime.text import MIMEText
+
 def send_email(FROM,TO,SUBJECT,MSG):
-	import smtplib
-	from email.mime.text import MIMEText
 	msg_file = open(MSG, "r")
 	msg = MIMEText(msg_file.read())
 	msg_file.close()
