@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #Author John Mactavish AKA Soap Mar28 2017
+#this script defines rsync & record errors into error log file
 
 import subprocess
 from os import system
