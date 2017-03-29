@@ -18,5 +18,7 @@ def check_log(LOG,ERR_FILE):
 			err_file.write(line)
 		if 'ERR' in line:
 			err_file.write(line)
+		if 'fail' in line:
+			err_file.write(line)
 	log_file.close()
 	err_file.close()
