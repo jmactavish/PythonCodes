@@ -3,7 +3,6 @@
 #this script defines rsync & record errors into error log file
 
 import subprocess
-from os import system
 
 def bash_rsync(LOG,SRC,DEST):
 	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no" --delete --log-file=' + LOG + ' ' + SRC + ' ' + DEST
