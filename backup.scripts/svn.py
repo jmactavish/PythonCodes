@@ -3,7 +3,7 @@
 from time import strftime
 
 LOG = "/data/dev_svn_backup/logs/" + strftime("%Y%m%d-%H%M") + ".log"
-SRC = "backup_robot@util2.21vtech.com:/var/svn"
+SRC = "backup_robot@util2:/var/svn"
 DEST = "/data/dev_svn_backup/"
 ERR_FILE = "/root/error.msg"
 
