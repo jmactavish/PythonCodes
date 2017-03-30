@@ -16,10 +16,10 @@ SUBJECT = 'SVN REPO BACKUP ' + strftime("%x,%X")
 MSG = LOG
 FROM = 'root@xps'
 TO = open('/root/john.mail.list',"r").read()
-#TO = '/root/john.mail.list'
 
 from send_email import send_email
 send_email(FROM,TO,SUBJECT,MSG)
 
+DESCRIPTION = open('/root/error.msg').read()
 from send_jira import send_jira
-send_jira()
+send_jira('BSS','SVN BACKUP ERROR',DESCRIPTION)
