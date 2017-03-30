@@ -20,3 +20,6 @@ TO = open('/root/john.mail.list',"r").read()
 
 from send_email import send_email
 send_email(FROM,TO,SUBJECT,MSG)
+
+from send_jira import send_jira
+send_jira()
