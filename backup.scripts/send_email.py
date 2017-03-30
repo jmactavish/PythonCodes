@@ -12,5 +12,5 @@ def send_email(FROM,TO,SUBJECT,MSG):
 	msg['To'] = TO
 
 	s = smtplib.SMTP('localhost')
-	s.sendmail(FROM, TO, msg.as_string())
+	s.sendmail(FROM, [TO], msg.as_string())
 	s.quit()
