@@ -3,7 +3,7 @@
 from time import strftime
 
 LOG = "/data/dev_svn_backup/logs/" + strftime("%Y%m%d-%H%M") + ".log"
-SRC = "backup_robot@util2.21vtech.com:/var/ssvn"
+SRC = "backup_robot@util2.21vtech.com:/var/svn"
 DEST = "/data/dev_svn_backup/"
 ERR_FILE = "/root/error.msg"
 
@@ -14,7 +14,7 @@ check_log(LOG,ERR_FILE)
 
 SUBJECT = 'SVN REPO BACKUP ' + strftime("%x,%X")
 MSG = LOG
-FROM = 'xps@21vtech.com'
+FROM = 'root@xps'
 TO = open('/root/john.mail.list',"r").read()
 
 from send_email import send_email
