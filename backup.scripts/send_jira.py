@@ -13,7 +13,6 @@ def send_jira(PROJ,SUMM):
 	if ( size > 0 ):
 		error = open(ERROR, 'r')
 		TEXT = error.read()
-		#open(ERROR, 'w').write(TEXT.replace('e',"E"))
 		DESC = TEXT.replace("\n","\\n").replace('\"','')
 		error.close()
 		copyfile(TEMPLATE, JSON)
