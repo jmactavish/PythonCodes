@@ -4,7 +4,7 @@ from time import strftime
 
 LOG = "/data/dev_svn_backup/logs/" + strftime("%Y%m%d-%H%M") + ".log"
 SRC = "backup_robot@util2:/var/svn"
-DEST = "/data/dev_svn_backup/"
+DEST = "/data/dev_svn_backup/" + strftime("%Y%m%d-%H%M") + '/'
 ERR_FILE = "/root/error.msg"
 
 from remote_sync import bash_rsync
