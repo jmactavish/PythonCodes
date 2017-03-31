@@ -5,8 +5,8 @@
 import subprocess
 import os
 
-def bash_rsync(LOG,SRC,DEST):
-	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no" --log-file=' + LOG + ' ' + SRC + ' ' + DEST
+def bash_rsync(PORT,LOG,SRC,DEST):
+	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + PORT +  '" --log-file=' + LOG + ' ' + SRC + ' ' + DEST
 	subprocess.call(rsync, shell=True)
 
 def check_log(LOG,ERR_FILE):

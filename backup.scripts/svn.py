@@ -3,12 +3,12 @@
 from time import strftime
 
 LOG = "/data/dev_svn_backup/logs/" + strftime("%Y%m%d-%H%M") + ".log"
-SRC = "backup_robot@util2:/var/ssvn"
+SRC = "backup_robot@util2:/var/svn"
 DEST = "/data/dev_svn_backup/" + strftime("%Y%m%d-%H%M") + '/'
 ERR_FILE = "/root/error.msg"
 
 from remote_sync import bash_rsync
-bash_rsync(LOG,SRC,DEST)
+bash_rsync('22',LOG,SRC,DEST)
 from remote_sync import check_log
 check_log(LOG,ERR_FILE)
 
