@@ -3,7 +3,7 @@
 from time import strftime
 
 LOG = "/data/dev_svn_backup/logs/" + strftime("%Y%m%d-%H%M") + ".log"
-SRC = "backup_robot@util2:/var/svn"
+SRC = "backup_robot@util2:/var/ssvn"
 DEST = "/data/dev_svn_backup/"
 ERR_FILE = "/root/error.msg"
 
@@ -20,6 +20,5 @@ TO = open('/root/john.mail.list',"r").read()
 from send_email import send_email
 send_email(FROM,TO,SUBJECT,MSG)
 
-DESCRIPTION = open('/root/error.msg').read()
 from send_jira import send_jira
-send_jira('BSS','SVN BACKUP ERROR',DESCRIPTION)
+send_jira('BSS','SVN BACKUP ERROR')
