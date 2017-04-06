@@ -15,13 +15,16 @@ with open(Yaml,'r') as yamlFile:
 
 jiraServer = JIRA(options={'server':Jira['addr'],'verify':False},basic_auth=(Jira['user'],Jira['pass']))
 
+def sendJira(desc):
+	jiraServer.create_issue(project=Jira['project'],summary=Jira['summary'],description=desc,issuetype={'name':'Bug'},assignee={'name':Jira['assign']})
+
 if not os.path.exists(log):
 	print 'log doesnt exist'
-	jiraServer.create_issue(project=Jira['project'],summary=Jira['summary'],description=Jira['desc'],issuetype={'name':'Bug'},assignee={'name':Jira['assign']})
+	sendJira(Jira['desc'])
 elif (os.path.getsize(conf['err']) > 0 ):
 	print 'error found'
 	with open(conf['err'],'r') as errors:
 		desc = errors.read()
-		jiraServer.create_issue(project=Jira['project'],summary=Jira['summary'],description=desc,issuetype={'name':'Bug'},assignee={'name':Jira['assign']})
+		sendJira(desc)
 else:
 	print 'safe'
