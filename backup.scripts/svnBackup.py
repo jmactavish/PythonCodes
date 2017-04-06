@@ -5,7 +5,9 @@ from time import strftime
 import os
 import yaml
 
-with open('svnConf.yaml','r') as yamlFile:
+Yaml = '/home/backup_robot/PythonCodes/backup.scripts/svnConf.yaml'
+
+with open(Yaml,'r') as yamlFile:
 	conf = yaml.load(yamlFile)
 	address = conf['address']
 	dest = address['dest']
