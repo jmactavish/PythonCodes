@@ -1,32 +1,25 @@
 #!/usr/bin/env python
 
-import subprocess
-from shutil import copyfile
+import yaml
 import os
+from time import strftime
+from jira import JIRA
 
-ERROR = '/root/error.msg'
-err_size = os.path.getsize(ERROR)
-TEMPLATE = '/root/jira.template'
-JSON = '/root/jira.file'
+with open('svnConf.yaml','r') as yamlFile:
+        conf = yaml.load(yamlFile)
+        address = conf['address']
+	Jira = conf['jira']
+	log = address['dest'] + 'logs/' + strftime("%Y%m%d-%H%M") + '.rsync.log'
 
-def send_jira(LOG,PROJ,SUMM):
-	if not os.path.exists(LOG):
-		copyfile(TEMPLATE, JSON)
-		JIRA = open(JSON,'r')
-                TEXT = JIRA.read()
-                open(JSON,'w').write(TEXT.replace('PROJECT',PROJ).replace('SUMMARY',SUMM).replace('DESCRIPTION','xps rsync didnt work last night!'))
-                JIRA.close()
-                bash_curl_send_jira = '/root/send_jira.sh'
-                subprocess.call(bash_curl_send_jira, shell=True)
-	if ( err_size > 0 ):
-		error = open(ERROR, 'r')
-		TEXT = error.read()
-		DESC = TEXT.replace("\n","\\n").replace('\"','')
-		error.close()
-		copyfile(TEMPLATE, JSON)
-		JIRA = open(JSON,'r')
-		TEXT = JIRA.read()
-		open(JSON,'w').write(TEXT.replace('PROJECT',PROJ).replace('SUMMARY',SUMM).replace('DESCRIPTION',DESC))
-		JIRA.close()
-		bash_curl_send_jira = '/root/send_jira.sh'
-		subprocess.call(bash_curl_send_jira, shell=True)
+jiraServer = JIRA(options={'server':Jira['addr'],'verify':False},basic_auth=(Jira['user'],Jira['pass']))
+
+if not os.path.exists(log):
+	print 'log doesnt exist'
+	jiraServer.create_issue(project=Jira['project'],summary=Jira['summary'],description=Jira['desc'],issuetype={'name':'Bug'},assignee={'name':Jira['assign']})
+elif (os.path.getsize(conf['err']) > 0 ):
+	print 'error found'
+	with open(conf['err'],'r') as errors:
+		desc = errors.read()
+		jiraServer.create_issue(project=Jira['project'],summary=Jira['summary'],description=desc,issuetype={'name':'Bug'},assignee={'name':Jira['assign']})
+else:
+	print 'safe'
