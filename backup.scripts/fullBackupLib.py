@@ -2,25 +2,35 @@
 
 import subprocess
 import os
-from time import strftime
+import smtplib
+from email.mime.text import MIMEText
 
-def bashRsync(src,dest,port):
-	destDir = dest + strftime("%Y%m%d-%H%M") + '/'
-	log = destDir + '/rsync.log'
-	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + port +  '" --log-file=' + log + ' ' + src + ' ' + destDir
+def bashRsync(src,dest,port,log):
+	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + port +  '" --log-file=' + log + ' ' + src + ' ' + dest
 	subprocess.call(rsync, shell=True)
 
-def checkLog(LOG,ERR_FILE):
-	if os.path.exists(LOG):
-		log_file = open(LOG, "r")
-		err_file = open(ERR_FILE, "a")
-		open(ERR_FILE,"w").close()
-		for line in log_file:
-			if 'err' in line:
-				err_file.write(line)
-			if 'ERR' in line:
-				err_file.write(line)
-			if 'fail' in line:
-				err_file.write(line)
-		log_file.close()
-		err_file.close()
+def checkLog(log,errFile):
+	if os.path.exists(log):
+		with open(log,'r') as Log:
+			open(errFile,'w').close()
+			with open(errFile,'a') as Err:
+				for line in Log:
+					if 'err' in line:
+						Err.write(line)
+					if 'Err' in line:
+						Err.write(line)
+					if 'ERR' in line:
+						Err.write(line)
+					if 'fail' in line:
+						Err.write(line)
+
+def sendMail(From,to,summary,log):
+	with open(log, 'r') as content:
+		msg = MIMEText(content.read())
+                msg['Subject'] = summary
+                msg['From'] = From
+                msg['To'] = to
+
+                s = smtplib.SMTP('localhost')
+                s.sendmail(From, [to], msg.as_string())
+                s.quit()

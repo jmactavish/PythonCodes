@@ -1,23 +1,20 @@
 #!/usr/bin/env python
 
+from fullBackupLib import bashRsync,checkLog,sendMail
 from time import strftime
+import os
+import yaml
 
-LOG = "/data/dev_svn_backup/logs/" + strftime("%Y%m%d-%H%M") + ".log"
-SRC = "backup_robot@util2:/var/svn"
-DEST = "/data/dev_svn_backup/" + strftime("%Y%m%d-%H%M") + '/'
-ERR_FILE = "/root/error.msg"
+with open('svnConf.yaml','r') as yamlFile:
+	conf = yaml.load(yamlFile)
+	address = conf['address']
+	dest = address['dest']
+        destDir = dest + strftime("%Y%m%d-%H%M") + '/'
+        log = dest + 'logs/' + strftime("%Y%m%d-%H%M") + '.rsync.log'
+	mail = conf['mail']
 
-from remote_sync import bash_rsync
-bash_rsync('22',LOG,SRC,DEST)
-from remote_sync import check_log
-check_log(LOG,ERR_FILE)
+bashRsync(address['src'],destDir,'22',log)
 
-SUBJECT = 'SVN REPO BACKUP ' + strftime("%x,%X")
-FROM = 'root@xps'
-TO = open('/root/john.mail.list',"r").read()
-
-from send_email import send_email
-send_email(FROM,TO,SUBJECT,LOG)
-
-from send_jira import send_jira
-send_jira(LOG,'BSS','SVN BACKUP ERROR')
+checkLog(log,conf['err'])
+	
+sendMail(mail['from'],mail['receiver'],mail['summary'],log)
