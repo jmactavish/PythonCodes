@@ -5,8 +5,12 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 
-def bashRsync(src,dest,port,log):
+def fullRsync(src,dest,port,log):
 	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + port +  '" --log-file=' + log + ' ' + src + ' ' + dest
+	subprocess.call(rsync, shell=True)
+
+def incrementalRsync(src,dest,port,log):
+	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + port +  '"  --delete --log-file=' + log + ' ' + src + ' ' + dest
 	subprocess.call(rsync, shell=True)
 
 def checkLog(log,errFile):

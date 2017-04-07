@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from fullBackupLib import bashRsync,checkLog,sendMail
+from BackupLib import fullRsync,checkLog,sendMail
 from time import strftime
 import os
 import yaml
