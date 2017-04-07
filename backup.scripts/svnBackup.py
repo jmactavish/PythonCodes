@@ -15,7 +15,7 @@ with open(Yaml,'r') as yamlFile:
         log = dest + 'logs/' + strftime("%Y%m%d-%H%M") + '.rsync.log'
 	mail = conf['mail']
 
-bashRsync(address['src'],destDir,'22',log)
+fullRsync(address['src'],destDir,'22',log)
 
 checkLog(log,conf['err'])
 	
