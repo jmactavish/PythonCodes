@@ -6,14 +6,17 @@ import smtplib
 from email.mime.text import MIMEText
 
 def fullRsync(src,dest,port,log):
+	'use Unix shell to run rsync'
 	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + str(port) +  '" --log-file=' + log + ' ' + src + ' ' + dest
 	subprocess.call(rsync, shell=True)
 
 def incrementalRsync(src,dest,port,log):
+	'use Unix shell to run rsync'
 	rsync = 'rsync -avze "ssh -o StrictHostKeyChecking=no -p' + str(port) +  '"  --delete --log-file=' + log + ' ' + src + ' ' + dest
 	subprocess.call(rsync, shell=True)
 
 def checkLog(log,errFile):
+	'print errors into the error log'
 	if os.path.exists(log):
 		with open(log,'r') as Log:
 			open(errFile,'w').close()
