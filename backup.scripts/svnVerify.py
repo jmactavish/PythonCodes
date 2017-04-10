@@ -19,12 +19,10 @@ def sendJira(desc):
 	jiraServer.create_issue(project=Jira['project'],summary=Jira['summary'],description=desc,issuetype={'name':'Bug'},assignee={'name':Jira['assign']})
 
 if not os.path.exists(log):
-	print 'log doesnt exist'
 	sendJira(Jira['desc'])
 elif (os.path.getsize(conf['err']) > 0 ):
-	print 'error found'
 	with open(conf['err'],'r') as errors:
 		desc = errors.read()
 		sendJira(desc)
 else:
-	print 'safe'
+	print('safe')
