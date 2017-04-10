@@ -34,10 +34,10 @@ def checkLog(log,errFile):
 def sendMail(From,to,summary,log):
 	with open(log, 'r') as content:
 		msg = MIMEText(content.read())
-                msg['Subject'] = summary
-                msg['From'] = From
-                msg['To'] = to
+		msg['Subject'] = summary
+		msg['From'] = From
+		msg['To'] = to
 
-                s = smtplib.SMTP('localhost')
-                s.sendmail(From, [to], msg.as_string())
-                s.quit()
+		s = smtplib.SMTP('localhost')
+		s.sendmail(From, [to], msg.as_string())
+		s.quit()
