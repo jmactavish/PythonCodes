@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from backupLib import incrementalRsync,checkLog,sendMail
+from backupLib import rsync,checkLog,sendMail
 from time import strftime
 import os
 import yaml
@@ -15,7 +15,7 @@ with open(Yaml,'r') as yamlFile:
 	source = address['src']
 	sourceList = source['index'] + ' ' + source['attachment'] + ' ' + source['archive']
 
-incrementalRsync(sourceList,address['dest'],address['port'],log)
+rsync(sourceList,address['dest'],address['port'],log)
 
 checkLog(log,conf['err'])
 	

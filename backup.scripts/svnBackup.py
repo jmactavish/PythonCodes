@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from backupLib import fullRsync,checkLog,sendMail
+from backupLib import noDelRsync,checkLog,sendMail
 from time import strftime
 import os
 import yaml
@@ -15,7 +15,7 @@ with open(Yaml,'r') as yamlFile:
         log = dest + 'logs/' + strftime("%Y%m%d-%H%M") + '.rsync.log'
 	mail = conf['mail']
 
-fullRsync(address['src'],destDir,address['port'],log)
+noDelRsync(address['src'],destDir,address['port'],log)
 
 checkLog(log,conf['err'])
 	
