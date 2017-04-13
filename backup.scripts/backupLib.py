@@ -3,6 +3,7 @@
 import subprocess
 import os
 import smtplib
+import tarfile
 from email.mime.text import MIMEText
 
 def noDelRsync(src,dest,port,log):
@@ -41,3 +42,8 @@ def sendMail(From,to,summary,log):
 		s = smtplib.SMTP('localhost')
 		s.sendmail(From, [to], msg.as_string())
 		s.quit()
+
+def tarGz(Dir,gz):
+	tar = tarfile.open(gz,'w:gz')
+	tar.add(Dir)
+	tar.close()

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from backupLib import rsync,checkLog,sendMail
+from backupLib import rsync,checkLog,sendMail,tarGz
 from time import strftime
 import os
 import yaml
@@ -20,3 +20,13 @@ rsync(sourceList,address['dest'],address['port'],log)
 checkLog(log,conf['err'])
 	
 sendMail(mail['from'],mail['receiver'],mail['summary'],log)
+
+attachmentsIn = address['dest'] + 'attachments'
+attachmentsOut = attachmentsIn + '-' + strftime("%Y%m%d-%H%M") + '.tar.gz'
+
+tarGz(attachmentsIn,attachmentsOut)
+
+indexIn = address['dest'] + 'indexes'
+indexOut = indexIn + '-' + strftime("%Y%m%d-%H%M") + '.tar.gz'
+
+tarGz(indexIn,indexOut)
