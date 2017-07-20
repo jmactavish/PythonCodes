@@ -1,11 +1,12 @@
 #!/usr/bin/env python
+#pip install pyyaml jira
 
 import yaml
 import os
 from time import strftime
 from jira import JIRA
 
-Yaml = '/home/backup_robot/PythonCodes/backup.scripts/confluenceConf.yml'
+Yaml = 'confluenceConf.yml'
 
 with open(Yaml,'r') as yamlFile:
         conf = yaml.load(yamlFile)
