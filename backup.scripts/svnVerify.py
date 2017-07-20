@@ -8,8 +8,8 @@ from jira import JIRA
 Yaml = 'svnConf.yml'
 
 with open(Yaml,'r') as yamlFile:
-        conf = yaml.load(yamlFile)
-        address = conf['address']
+		conf = yaml.load(yamlFile)
+		address = conf['address']
 	Jira = conf['jira']
 	log = address['dest'] + 'logs/' + strftime("%Y%m%d-%H%M") + '.rsync.log'
 

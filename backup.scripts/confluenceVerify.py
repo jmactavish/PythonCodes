@@ -14,16 +14,14 @@ with open(Yaml, 'r') as yamlFile:
     Jira = conf['jira']
     log = address['dest'] + 'logs/' + strftime("%Y%m%d") + '.rsync.log'
 
-jiraServer = JIRA(options={'server': Jira['addr'], 'verify': False}, basic_auth=(Jira['user'], Jira['pass']))
-
+try:
+    jiraServer = JIRA(options={'server': Jira['addr'], 'verify': False}, basic_auth=(Jira['user'], Jira['pass']))
+except:
+    print('sendJira Error!')
 
 def sendJira(desc):
-    try:
-        jiraServer.create_issue(project=Jira['project'], summary=Jira['summary'], description=desc,
+    jiraServer.create_issue(project=Jira['project'], summary=Jira['summary'], description=desc,
                                 issuetype={'name': 'Bug'}, assignee={'name': Jira['assign']})
-    except:
-        print('sendJira Error!')
-
 
 if not os.path.exists(log):
     sendJira(Jira['desc'])

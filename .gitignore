@@ -2,3 +2,5 @@
 *.pyc
 *.yml
 *.yaml
+*.log
+.idea
