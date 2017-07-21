@@ -5,6 +5,7 @@ import yaml
 import os
 from time import strftime
 from jira import JIRA
+from backupLib import criticalMail
 
 Yaml = 'confluenceConf.yml'
 
@@ -13,11 +14,12 @@ with open(Yaml, 'r') as yamlFile:
     address = conf['address']
     Jira = conf['jira']
     log = address['dest'] + 'logs/' + strftime("%Y%m%d") + '.rsync.log'
+    mail = conf['mail']
 
 try:
     jiraServer = JIRA(options={'server': Jira['addr'], 'verify': False}, basic_auth=(Jira['user'], Jira['pass']))
 except:
-    print('sendJira Error!')
+    criticalMail(mail['from'], mail['receiver'])
 
 def sendJira(desc):
     jiraServer.create_issue(project=Jira['project'], summary=Jira['summary'], description=desc,
