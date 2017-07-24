@@ -1,9 +1,13 @@
 #!/usr/bin/env python
+# pip install pyyaml
 
 from backupLib import rsync,checkLog,sendMail,tarGz
 from time import strftime
+try:
+	import yaml
+except:
+	print 'pyyaml module not installed?'
 import os
-import yaml
 
 Yaml = 'jiraConf.yml'
 
