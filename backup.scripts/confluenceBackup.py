@@ -10,8 +10,15 @@ Yaml = 'confluenceConf.yml'
 with open(Yaml,'r') as yamlFile:
 	conf = yaml.load(yamlFile)
 	address = conf['address']
-	log = address['dest'] + 'logs/' + strftime("%Y%m%d") + '.rsync.log'
+	logDir = address['dest'] + 'logs/'
 	mail = conf['mail']
+
+try:
+    os.stat(logDir)
+except:
+    os.mkdir(logDir)
+
+log = logDir + strftime("%Y%m%d") + '.rsync.log'
 
 noDelRsync(address['src'],address['dest'],address['port'],log)
 
